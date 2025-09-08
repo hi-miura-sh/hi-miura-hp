@@ -1,0 +1,466 @@
+/* リセットCSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ナビゲーション */
+.navbar {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0 40px;
+    height: 60px;
+    align-items: center;
+}
+
+.navbar li {
+    margin: 0 25px;
+}
+
+.navbar a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar a.active, .navbar a:hover {
+    background: #3498db;
+    color: white;
+}
+
+/* ヒーローセクション */
+.hero {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+    position: relative;
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* メインコンテンツ */
+main {
+    background: white;
+    min-height: calc(100vh - 260px);
+    padding: 40px 0;
+}
+
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* プロフィール画像セクション（将来的に顔写真用） */
+.profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 180px;
+    flex-shrink: 0;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 4px solid white;
+}
+
+.profile-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+    border: 4px solid white;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-placeholder span {
+    color: white;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 4px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 情報セクション */
+.info-section {
+    padding: 20px 0;
+}
+
+.name-title {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.name-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.name-text {
+    flex: 1;
+    text-align: left;
+}
+
+.name-title h2 {
+    color: #2c3e50;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.position {
+    color: #34495e;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.department {
+    color: #7f8c8d;
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-block {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.info-block h3 {
+    color: #2c3e50;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 8px;
+}
+
+.info-block ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.info-block li {
+    margin-bottom: 8px;
+    padding-left: 0;
+    position: relative;
+    color: #34495e;
+    line-height: 1.6;
+}
+
+.info-block li::before {
+    display: none;
+}
+
+.info-block strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.info-block a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-block a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Publications スタイル */
+.publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.publication-category {
+    margin-bottom: 10px;
+}
+
+.publication-category h4 {
+    color: #2c3e50;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3498db;
+    background: linear-gradient(90deg, #3498db, transparent);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.publication-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+    transition: background-color 0.3s ease;
+}
+
+.publication-item:hover {
+    background: #e9ecef;
+}
+
+.pub-number {
+    background: #3498db;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.85em;
+    min-width: 35px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.pub-details {
+    flex: 1;
+}
+
+.pub-authors {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.95em;
+}
+
+.pub-title {
+    color: #34495e;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+.pub-journal {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.doi-link, .url-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85em;
+    margin-left: 8px;
+    padding: 2px 6px;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.doi-link:hover, .url-link:hover {
+    background: rgba(52, 152, 219, 0.2);
+    color: #2980b9;
+    text-decoration: none;
+}
+
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+    .main-content {
+        padding: 0 30px;
+    }
+    
+    .name-content {
+        gap: 20px;
+    }
+    
+    .profile-image {
+        width: 120px;
+        height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar ul {
+        padding: 0 20px;
+        height: 50px;
+    }
+    
+    .navbar li {
+        margin: 0 15px;
+    }
+    
+    .navbar a {
+        font-size: 1em;
+        padding: 6px 12px;
+    }
+    
+    .hero {
+        height: 150px;
+        margin-top: 50px;
+    }
+    
+    .hero h1 {
+        font-size: 2.2em;
+    }
+    
+    .main-content {
+        padding: 0 20px;
+    }
+    
+    .name-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .name-text {
+        text-align: center;
+    }
+    
+    .profile-image {
+        width: 100px;
+        height: 120px;
+    }
+    
+    .profile-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+    }
+    
+    .profile-placeholder span {
+        font-size: 2em;
+        letter-spacing: 3px;
+    }
+    
+    .name-title h2 {
+        font-size: 1.8em;
+    }
+    
+    .position {
+        font-size: 1.1em;
+    }
+    
+    .info-block {
+        padding: 20px;
+    }
+    
+    .info-block h3 {
+        font-size: 1.2em;
+    }
+    
+    .publication-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .pub-number {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0 15px;
+    }
+    
+    .hero h1 {
+        font-size: 1.8em;
+    }
+    
+    .name-title h2 {
+        font-size: 1.6em;
+    }
+    
+    .info-block {
+        padding: 15px;
+    }
+    
+    .profile-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
+    }
+    
+    .profile-placeholder span {
+        font-size: 1.6em;
+        letter-spacing: 2px;
+    }
+}

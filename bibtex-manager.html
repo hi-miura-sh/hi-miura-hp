@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BibTeX管理 - 三浦秀芳</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="images/icon.png" type="image/png">
+    <style>
+        .bibtex-manager {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .bibtex-form {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            height: 200px;
+            font-family: monospace;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .current-bibtex {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .current-bibtex pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Biography</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="achievements.html">Publications</a></li>
+            <li><a href="profile.html">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="bibtex-manager">
+            <h1>BibTeX管理</h1>
+            
+            <div class="bibtex-form">
+                <h2>新しい論文を追加</h2>
+                <form id="bibtexForm">
+                    <div class="form-group">
+                        <label for="entryType">エントリタイプ:</label>
+                        <select id="entryType">
+                            <option value="article">Article (学術論文)</option>
+                            <option value="inproceedings">InProceedings (会議論文)</option>
+                            <option value="book">Book (書籍)</option>
+                            <option value="incollection">InCollection (書籍の章)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entryKey">エントリキー:</label>
+                        <input type="text" id="entryKey" placeholder="例: miura2025new" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="author">著者:</label>
+                        <input type="text" id="author" placeholder="例: 三浦秀芳 and 田中太郎" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">タイトル:</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="journal">雑誌/会議名:</label>
+                        <input type="text" id="journal" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="year">年:</label>
+                        <input type="number" id="year" min="1900" max="2100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="volume">巻:</label>
+                        <input type="text" id="volume" placeholder="例: 123">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="number">号:</label>
+                        <input type="text" id="number" placeholder="例: 4">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pages">ページ:</label>
+                        <input type="text" id="pages" placeholder="例: 123-130">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="note">注記:</label>
+                        <input type="text" id="note" placeholder="例: 掲載予定">
+                    </div>
+                    
+                    <button type="submit" class="btn">BibTeXエントリを生成</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">クリア</button>
+                </form>
+            </div>
+            
+            <div class="current-bibtex">
+                <h2>現在のBibTeXファイル</h2>
+                <pre id="bibtexContent">読み込み中...</pre>
+                <button class="btn" onclick="loadBibTeX()">再読み込み</button>
+                <button class="btn btn-secondary" onclick="copyBibTeX()">コピー</button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // BibTeXファイルを読み込み
+        async function loadBibTeX() {
+            try {
+                const response = await fetch('publications.bib');
+                const content = await response.text();
+                document.getElementById('bibtexContent').textContent = content;
+            } catch (error) {
+                document.getElementById('bibtexContent').textContent = 'BibTeXファイルの読み込みに失敗しました。';
+            }
+        }
+        
+        // BibTeXエントリを生成
+        function generateBibTeXEntry() {
+            const type = document.getElementById('entryType').value;
+            const key = document.getElementById('entryKey').value;
+            const author = document.getElementById('author').value;
+            const title = document.getElementById('title').value;
+            const journal = document.getElementById('journal').value;
+            const year = document.getElementById('year').value;
+            const volume = document.getElementById('volume').value;
+            const number = document.getElementById('number').value;
+            const pages = document.getElementById('pages').value;
+            const note = document.getElementById('note').value;
+            
+            let bibtex = `@${type}{${key},\n`;
+            bibtex += `  author = {${author}},\n`;
+            bibtex += `  title = {${title}},\n`;
+            
+            if (type === 'inproceedings') {
+                bibtex += `  booktitle = {${journal}},\n`;
+            } else {
+                bibtex += `  journal = {${journal}},\n`;
+            }
+            
+            if (year) bibtex += `  year = {${year}},\n`;
+            if (volume) bibtex += `  volume = {${volume}},\n`;
+            if (number) bibtex += `  number = {${number}},\n`;
+            if (pages) bibtex += `  pages = {${pages}},\n`;
+            if (note) bibtex += `  note = {${note}},\n`;
+            
+            bibtex += `}`;
+            
+            return bibtex;
+        }
+        
+        // フォーム送信処理
+        document.getElementById('bibtexForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const bibtexEntry = generateBibTeXEntry();
+            
+            // 新しいエントリをBibTeXファイルに追加（実際の実装ではサーバーサイドが必要）
+            alert('BibTeXエントリが生成されました:\n\n' + bibtexEntry + '\n\nこのエントリをpublications.bibファイルに手動で追加してください。');
+            
+            // ページをリロードして新しいエントリを表示
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        });
+        
+        // フォームクリア
+        function clearForm() {
+            document.getElementById('bibtexForm').reset();
+        }
+        
+        // BibTeXをコピー
+        function copyBibTeX() {
+            const content = document.getElementById('bibtexContent').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('BibTeXファイルがクリップボードにコピーされました。');
+            });
+        }
+        
+        // ページ読み込み時にBibTeXファイルを読み込み
+        document.addEventListener('DOMContentLoaded', loadBibTeX);
+    </script>
+</body>
+</html>
