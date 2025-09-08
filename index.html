@@ -26,9 +26,21 @@
         </div>
     </header>
     
+    <!-- サイドメニュー -->
+    <nav class="side-menu">
+        <ul>
+            <li><a href="#biography" class="side-menu-item active">Biography</a></li>
+            <li><a href="#information" class="side-menu-item">Information</a></li>
+            <li><a href="#research-topic" class="side-menu-item">Research Topic</a></li>
+            <li><a href="#education" class="side-menu-item">Education</a></li>
+            <li><a href="#career" class="side-menu-item">Career</a></li>
+            <li><a href="#publications" class="side-menu-item">Publications</a></li>
+        </ul>
+    </nav>
+
     <main>
         <div class="main-content">
-            <div class="info-section">
+            <div class="info-section" id="biography">
                 <div class="name-title">
                     <div class="name-content">
                         <div class="profile-image">
@@ -43,7 +55,7 @@
                 </div>
                 
                 <div class="info-content">
-                    <div class="info-block">
+                    <div class="info-block" id="information">
                         <h3>Information:</h3>
                         <ul>
                             <li><strong>Name:</strong> 三浦秀芳 (Hideyoshi Miura)</li>
@@ -55,7 +67,7 @@
                         </ul>
                     </div>
                     
-                    <div class="info-block">
+                    <div class="info-block" id="research-topic">
                         <h3>Research Topic:</h3>
                         <ul>
                             <li><a href="research.html#communication-protocol">通信プロトコル</a></li>
@@ -67,7 +79,7 @@
                         </ul>
                     </div>
                     
-                    <div class="info-block">
+                    <div class="info-block" id="education">
                         <h3>Education:</h3>
                         <ul>
                             <li><strong>2020.3</strong> 関西大学 システム理工学部 電気電子情報工学科 卒業</li>
@@ -76,7 +88,7 @@
                         </ul>
                     </div>
                     
-                    <div class="info-block">
+                    <div class="info-block" id="career">
                         <h3>Career:</h3>
                         <ul>
                             <li><strong>2024.6</strong> 台湾中原大学（関西大学若手研究者海外研究活動）</li>
@@ -84,10 +96,42 @@
                         </ul>
                     </div>
                     
-                    <div class="info-block">
+                    <div class="info-block" id="publications">
                         <h3>Publications:</h3>
-                        <div class="publications-list">
-                            <!-- BibTeXファイルから動的に生成されます -->
+                        
+                        <div class="publication-subsection">
+                            <h4>論文誌</h4>
+                            <div class="publications-list journal-papers">
+                                <!-- 論文誌の論文がここに表示されます -->
+                            </div>
+                        </div>
+                        
+                        <div class="publication-subsection">
+                            <h4>国際会議（査読有）</h4>
+                            <div class="publications-list international-reviewed">
+                                <!-- 国際会議（査読有）の論文がここに表示されます -->
+                            </div>
+                        </div>
+                        
+                        <div class="publication-subsection">
+                            <h4>国際会議（その他）</h4>
+                            <div class="publications-list international-other">
+                                <!-- 国際会議（その他）の論文がここに表示されます -->
+                            </div>
+                        </div>
+                        
+                        <div class="publication-subsection">
+                            <h4>国内発表</h4>
+                            <div class="publications-list domestic">
+                                <!-- 国内発表の論文がここに表示されます -->
+                            </div>
+                        </div>
+                        
+                        <div class="publication-subsection">
+                            <h4>研究助成等</h4>
+                            <div class="publications-list grant">
+                                <!-- 研究助成等がここに表示されます -->
+                            </div>
                         </div>
                     </div>
                 </div>

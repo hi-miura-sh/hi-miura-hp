@@ -189,18 +189,32 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log('No publications found, updating numbers only');
         updatePublicationNumbers();
     }
+    
+    // サイドメニューの機能を初期化
+    initSideMenu();
 });
 
 function updatePublicationsFromBibTeX(publications) {
-    const publicationsList = document.querySelector('.publications-list');
+    // 各カテゴリのコンテナを取得
+    const categoryContainers = {
+        journal: document.querySelector('.journal-papers'),
+        international_reviewed: document.querySelector('.international-reviewed'),
+        international_other: document.querySelector('.international-other'),
+        domestic: document.querySelector('.domestic'),
+        grant: document.querySelector('.grant')
+    };
 
-    if (!publicationsList) {
-        console.error('Publications list element not found!');
-        return;
-    }
+    // 各コンテナが存在するかチェック
+    Object.keys(categoryContainers).forEach(key => {
+        if (!categoryContainers[key]) {
+            console.error(`Container for category ${key} not found!`);
+        }
+    });
     
     // 既存の論文をクリア
-    publicationsList.innerHTML = '';
+    Object.values(categoryContainers).forEach(container => {
+        if (container) container.innerHTML = '';
+    });
     
     // カテゴリ別に分類
     const categories = {
@@ -240,14 +254,9 @@ function updatePublicationsFromBibTeX(publications) {
     // 各カテゴリを表示
     Object.keys(categories).forEach(categoryKey => {
         const category = categories[categoryKey];
+        const container = categoryContainers[categoryKey];
         
-        if (category.publications.length > 0) {
-            // カテゴリヘッダー
-            const categoryHeader = document.createElement('div');
-            categoryHeader.className = 'publication-category';
-            categoryHeader.innerHTML = `<h4>${category.name}</h4>`;
-            publicationsList.appendChild(categoryHeader);
-            
+        if (container && category.publications.length > 0) {
             // カテゴリ内の論文
             category.publications.forEach(({ pub, index }) => {
                 const parser = new BibTeXParser();
@@ -266,7 +275,7 @@ function updatePublicationsFromBibTeX(publications) {
                     </div>
                 `;
                 
-                publicationsList.appendChild(publicationItem);
+                container.appendChild(publicationItem);
                 globalNumber++; // 次の番号に進む
             });
         }
@@ -336,4 +345,94 @@ function addPublication(authors, title, journal, year) {
     
     // 番号を再計算
     updatePublicationNumbers();
+}
+
+// サイドメニューの機能
+function initSideMenu() {
+    const sideMenu = document.querySelector('.side-menu');
+    
+    // スムーズスクロール
+    const sideMenuItems = document.querySelectorAll('.side-menu-item');
+    sideMenuItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // 各セクションに適切なオフセットを設定
+                let offset = 60; // デフォルトのオフセット
+                
+                if (targetId === 'publications') {
+                    offset = 100; // Publicationsはサブ見出しがあるので多めに
+                } else if (targetId === 'biography') {
+                    offset = 40; // Biographyは少なめに
+                }
+                
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // スクロール時の動作
+    window.addEventListener('scroll', function() {
+        updateActiveSideMenu();
+        updateSideMenuPosition();
+    });
+    
+    // サイドメニューの位置更新
+    function updateSideMenuPosition() {
+        const scrollY = window.scrollY;
+        const heroHeight = document.querySelector('.hero').offsetHeight;
+        
+        if (scrollY > heroHeight - 100) {
+            // ヒーローセクションを過ぎたら上部に固定
+            sideMenu.classList.add('scrolled');
+        } else {
+            // ヒーローセクション内では中央に配置
+            sideMenu.classList.remove('scrolled');
+        }
+    }
+}
+
+function updateActiveSideMenu() {
+    const sections = ['biography', 'information', 'research-topic', 'education', 'career', 'publications'];
+    const sideMenuItems = document.querySelectorAll('.side-menu-item');
+    
+    let currentSection = '';
+    
+    sections.forEach(sectionId => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const rect = element.getBoundingClientRect();
+            // 各セクションに適切な判定範囲を設定
+            if (sectionId === 'publications') {
+                if (rect.top <= 120 && rect.bottom >= 50) {
+                    currentSection = sectionId;
+                }
+            } else if (sectionId === 'biography') {
+                if (rect.top <= 60 && rect.bottom >= 60) {
+                    currentSection = sectionId;
+                }
+            } else {
+                if (rect.top <= 80 && rect.bottom >= 80) {
+                    currentSection = sectionId;
+                }
+            }
+        }
+    });
+    
+    // アクティブクラスを更新
+    sideMenuItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === `#${currentSection}`) {
+            item.classList.add('active');
+        }
+    });
 }

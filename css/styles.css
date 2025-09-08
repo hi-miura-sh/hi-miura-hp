@@ -269,6 +269,24 @@ main {
     background-position: bottom;
 }
 
+/* 論文サブセクションのスタイル */
+.publication-subsection {
+    margin-bottom: 30px;
+}
+
+.publication-subsection h4 {
+    color: #2c3e50;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3498db;
+    background: linear-gradient(90deg, #3498db, transparent);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
 .publication-item {
     display: flex;
     align-items: flex-start;
@@ -339,9 +357,92 @@ main {
     text-decoration: none;
 }
 
+/* 研究画像のスタイル */
+.research-image {
+    max-width: 100%;
+    height: auto;
+    margin: 16px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.research-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* サイドメニュー */
+.side-menu {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 180px;
+    transition: all 0.3s ease;
+}
+
+/* スクロール時のサイドメニューの動作 */
+.side-menu.scrolled {
+    top: 20px;
+    transform: translateY(0);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* より滑らかなアニメーション */
+.side-menu {
+    will-change: transform, top;
+}
+
+.side-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.side-menu li {
+    margin: 0;
+}
+
+.side-menu-item {
+    display: block;
+    padding: 12px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.side-menu-item:hover {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    border-left-color: #3498db;
+    text-decoration: none;
+}
+
+.side-menu-item.active {
+    background: rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+    border-left-color: #2980b9;
+    font-weight: 600;
+}
+
 
 /* レスポンシブデザイン */
 @media (max-width: 1024px) {
+    .side-menu {
+        display: none;
+    }
+    
     .main-content {
         padding: 0 30px;
     }
