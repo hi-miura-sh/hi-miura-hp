@@ -16,7 +16,7 @@
             <li><a href="index.html">Biography</a></li>
             <li><a href="research.html">Research</a></li>
             <li><a href="achievements.html" class="active">Publications</a></li>
-            <li><a href="profile.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
     
@@ -25,35 +25,61 @@
             <h1>Publications</h1>
         </div>
     </header>
+    
+    <!-- サイドメニュー -->
+    <nav class="side-menu">
+        <ul>
+            <li class="menu-item-with-submenu">
+                <a href="#publications" class="side-menu-item active">Publications</a>
+                <ul class="submenu">
+                    <li><a href="#journal-papers" class="submenu-item">論文誌</a></li>
+                    <li><a href="#international-reviewed" class="submenu-item">国際会議（査読有）</a></li>
+                    <li><a href="#international-other" class="submenu-item">国際会議（その他）</a></li>
+                    <li><a href="#domestic" class="submenu-item">国内発表</a></li>
+                    <li><a href="#grant" class="submenu-item">研究助成等</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    
     <main>
         <div class="main-content">
             <div class="info-content">
-                <div class="info-block">
-                    <h3>Journal Papers</h3>
-                    <ol>
-                        <li><u>H. Miura</u>, T. Kimura, and K. Hirata. Deterministic epidemic modeling of future botnet malware with a contact process. <i>IEICE Communications Express</i>, 10(6):295-300, 2021.</li>
-                        <li><u>H. Miura</u>, K. Hirata, and T. Tachibana. P4-based design of fast failure recovery for software-defined networks. <i>Computer Networks</i>, 216(24):109274, 2022.</li>
-                        <li>T. Misugi, <u>H. Miura</u>, K. Hirata, and T. Tachibana. Design of multiple routing configurations considering load distribution for network slicing. <i>APSIPA Transactions on Signal and Information Processing</i>, 12(2):e9, 2023.</li>
-                        <li><u>H. Miura</u>, T. Kimura, H. Aman, and K. Hirata. Game-theoretic approach to epidemic modeling of countermeasures against future malware evolution. <i>Computer Communications</i>, 206:160-171, 2023.</li>
-                    </ol>
-                </div>
-                
-                <div class="info-block">
-                    <h3>Refereed Conference Papers</h3>
-                    <ol>
-                        <li><u>H. Miura</u>, T. Kimura, and K. Hirata. Modeling of malware diffusion with the FLIPIT game. In <i>Proc. IEEE ICCE-TW 2020</i>, Sep. 2020.</li>
-                        <li><u>H. Miura</u>, T. Kimura, and K. Hirata. Inhibition modeling of future malware diffusion with an evolutionary game theory. In <i>Proc. APSIPA ASC 2021</i>, Dec. 2021.</li>
-                        <li><u>H. Miura</u>, T. Kimura, and K. Hirata. Modeling of malware diffusion with mobile devices in intermittently connected networks. In <i>Proc. APSIPA ASC 2022</i>, Nov. 2022.</li>
-                        <li>M. Tsunematsu, K. Uno, <u>H. Miura</u>, and K. Hirata. Server placement method with conditional generative adversarial networks. In <i>Proc. IEEE ICCE-TW 2022</i>, Sep. 2022.</li>
-                        <li>Y. Hazama, <u>H. Miura</u>, T. Kimura, and K. Hirata. Node-based epidemic modeling. In <i>Proc. IEEE ICCE-TW 2023</i>, Jul. 2023.</li>
-                        <li>R. Kaneko, <u>H. Miura</u>, T. Kimura, and K. Hirata. Optimization of UAV placement. In <i>Proc. IEEE ICCE-TW 2023</i>, Jul. 2023.</li>
-                        <li><u>H. Miura</u>, T. Kimura, and K. Hirata. Approximate modeling of malware diffusion. In <i>Proc. APSIPA ASC 2023</i>, Nov. 2023.</li>
-                    </ol>
-                </div>
-                
-                <div class="info-block">
-                    <h3>Non-Refereed Technical Papers</h3>
-                    <p>詳細な業績一覧は<a href="index.html">Biographyページ</a>のPublicationsセクションをご覧ください。</p>
+                <div class="info-block" id="publications">
+                    <div class="publication-subsection" id="journal-papers">
+                        <h4>論文誌</h4>
+                        <div class="publications-list journal-papers">
+                            <!-- 論文誌の論文がここに表示されます -->
+                        </div>
+                    </div>
+                    
+                    <div class="publication-subsection" id="international-reviewed">
+                        <h4>国際会議（査読有）</h4>
+                        <div class="publications-list international-reviewed">
+                            <!-- 国際会議（査読有）の論文がここに表示されます -->
+                        </div>
+                    </div>
+                    
+                    <div class="publication-subsection" id="international-other">
+                        <h4>国際会議（その他）</h4>
+                        <div class="publications-list international-other">
+                            <!-- 国際会議（その他）の論文がここに表示されます -->
+                        </div>
+                    </div>
+                    
+                    <div class="publication-subsection" id="domestic">
+                        <h4>国内発表</h4>
+                        <div class="publications-list domestic">
+                            <!-- 国内発表の論文がここに表示されます -->
+                        </div>
+                    </div>
+                    
+                    <div class="publication-subsection" id="grant">
+                        <h4>研究助成等</h4>
+                        <div class="publications-list grant">
+                            <!-- 研究助成等がここに表示されます -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

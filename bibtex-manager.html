@@ -181,7 +181,7 @@
                 const content = await response.text();
                 document.getElementById('bibtexContent').textContent = content;
             } catch (error) {
-                document.getElementById('bibtexContent').textContent = 'BibTeXファイルの読み込みに失敗しました。';
+                document.getElementById('bibtexContent').textContent = 'BibTeXファイルの読み込みに失敗しました．';
             }
         }
         
@@ -226,7 +226,7 @@
             const bibtexEntry = generateBibTeXEntry();
             
             // 新しいエントリをBibTeXファイルに追加（実際の実装ではサーバーサイドが必要）
-            alert('BibTeXエントリが生成されました:\n\n' + bibtexEntry + '\n\nこのエントリをpublications.bibファイルに手動で追加してください。');
+            alert('BibTeXエントリが生成されました:\n\n' + bibtexEntry + '\n\nこのエントリをpublications.bibファイルに手動で追加してください．');
             
             // ページをリロードして新しいエントリを表示
             setTimeout(() => {
@@ -243,7 +243,7 @@
         function copyBibTeX() {
             const content = document.getElementById('bibtexContent').textContent;
             navigator.clipboard.writeText(content).then(() => {
-                alert('BibTeXファイルがクリップボードにコピーされました。');
+                alert('BibTeXファイルがクリップボードにコピーされました．');
             });
         }
         
