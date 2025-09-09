@@ -687,3 +687,50 @@ main {
     font-style: italic;
     color: #7f8c8d;
 }
+
+/* Google Maps スタイル */
+.map-container {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    border-radius: 8px;
+}
+
+/* 論文バッジのスタイル */
+.pub-badges {
+    position: absolute;
+    right: -100px; /* より右に移動 */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pub-badges img {
+    height: 120px; /* 80pxから120pxにさらに拡大 */
+    width: auto;
+    border-radius: 3px;
+    transition: transform 0.2s ease;
+}
+
+.pub-badges img:hover {
+    transform: scale(1.1);
+}
+
+/* 論文アイテムのレイアウト調整 */
+.publication-item {
+    position: relative;
+    padding-right: 0; /* バッジは外側なのでパディング不要 */
+    transition: background-color 0.3s ease;
+}
+
+/* 論文アイテムのホバー効果 */
+.publication-item:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+}

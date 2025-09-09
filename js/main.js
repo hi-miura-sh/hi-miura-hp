@@ -254,6 +254,8 @@ class BibTeXParser {
             let cleanDoi = doi.trim();
             // 余分な中括弧や文字を削除
             cleanDoi = cleanDoi.replace(/^[{}]+|[{}]+$/g, '');
+            // 末尾の余分な文字を削除
+            cleanDoi = cleanDoi.replace(/[^0-9a-zA-Z.\/_-]+$/g, '');
             
             const doiUrl = cleanDoi.startsWith('http') ? cleanDoi : `https://doi.org/${cleanDoi}`;
             linkInfo = ` <a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="doi-link">DOI</a>`;
@@ -272,6 +274,45 @@ class BibTeXParser {
             year: year
         };
     }
+}
+
+// ホバー時に表示するリンクを取得する関数
+function getHoverLinks(pub) {
+    const doi = pub.fields.doi;
+    const url = pub.fields.url;
+    
+    let links = '';
+    
+    if (doi) {
+        // DOIの正規化処理
+        let cleanDoi = doi.trim();
+        cleanDoi = cleanDoi.replace(/^[{}]+|[{}]+$/g, '');
+        
+        const doiUrl = cleanDoi.startsWith('http') ? cleanDoi : `https://doi.org/${cleanDoi}`;
+        links += `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="hover-doi-link">DOI</a>`;
+    } else if (url) {
+        links += `<a href="${url}" target="_blank" rel="noopener noreferrer" class="hover-url-link">URL</a>`;
+    }
+    
+    return links;
+}
+
+// ジャーナルバッジを取得する関数
+function getJournalBadge(journalName) {
+    const journalBadges = {
+        'Electronics': '<a href="https://www.scimagojr.com/journalsearch.php?q=21100829272&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=21100829272" alt="SCImago Journal &amp; Country Rank"  /></a>',
+        'IEEE Access': '<a href="https://www.scimagojr.com/journalsearch.php?q=21100210000&tip=sid&exact=no" title="SCImago Journal & Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=21100210000" alt="SCImago Journal & Country Rank" /></a>',
+        'Computer Communications': '<a href="https://www.scimagojr.com/journalsearch.php?q=13681&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=13681" alt="SCImago Journal &amp; Country Rank"  /></a>',
+        'APSIPA Transactions on Signal and Information Processing': '<a href="https://www.scimagojr.com/journalsearch.php?q=21100332423&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=21100332423" alt="SCImago Journal &amp; Country Rank"  /></a>',
+        'Computer Networks': '<a href="https://www.scimagojr.com/journalsearch.php?q=26811&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=26811" alt="SCImago Journal &amp; Country Rank"  /></a>',
+        'Future Internet': '<a href="https://www.scimagojr.com/journalsearch.php?q=13184&tip=sid&exact=no" title="SCImago Journal & Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=13184" alt="SCImago Journal & Country Rank" /></a>',
+        'Future Transportation': '<a href="https://www.scimagojr.com/journalsearch.php?q=13184&tip=sid&exact=no" title="SCImago Journal & Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=13184" alt="SCImago Journal & Country Rank" /></a>',
+        'Drones': '<a href="https://www.scimagojr.com/journalsearch.php?q=13184&tip=sid&exact=no" title="SCImago Journal & Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=13184" alt="SCImago Journal & Country Rank" /></a>',
+        '電気学会論文誌C (IEICE Transactions on Communications)': '<a href="https://www.scimagojr.com/journalsearch.php?q=3300147412&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=3300147412" alt="SCImago Journal &amp; Country Rank"  /></a>',
+        '電気学会論文誌C (IEEJ Transactions on Electronics, Information and Systems)': '<a href="https://www.scimagojr.com/journalsearch.php?q=3300147412&amp;tip=sid&amp;exact=no" title="SCImago Journal &amp; Country Rank"><img border="0" src="https://www.scimagojr.com/journal_img.php?id=3300147412" alt="SCImago Journal &amp; Country Rank"  /></a>'
+    };
+    
+    return journalBadges[journalName] || '';
 }
 
 // 動的番号管理機能
@@ -364,12 +405,36 @@ function updatePublicationsFromBibTeX(publications) {
                 publicationItem.className = 'publication-item';
                 publicationItem.setAttribute('data-year', formatted.year);
                 
+                // DOIまたはURLがある場合、論文全体をクリック可能にする
+                const doi = pub.fields.doi;
+                const url = pub.fields.url;
+                if (doi || url) {
+                    let linkUrl = '';
+                    if (doi) {
+                        let cleanDoi = doi.trim();
+                        cleanDoi = cleanDoi.replace(/^[{}]+|[{}]+$/g, '');
+                        // 末尾の余分な文字を削除
+                        cleanDoi = cleanDoi.replace(/[^0-9a-zA-Z.\/_-]+$/g, '');
+                        linkUrl = cleanDoi.startsWith('http') ? cleanDoi : `https://doi.org/${cleanDoi}`;
+                    } else if (url) {
+                        linkUrl = url;
+                    }
+                    
+                    publicationItem.style.cursor = 'pointer';
+                    publicationItem.addEventListener('click', function() {
+                        window.open(linkUrl, '_blank', 'noopener,noreferrer');
+                    });
+                }
+                
                 publicationItem.innerHTML = `
                     <span class="pub-number">[${globalNumber}]</span>
                     <div class="pub-details">
                         <p class="pub-authors">${formatted.authors}</p>
                         <p class="pub-title">${formatted.title}</p>
                         <p class="pub-journal"><em>${formatted.journalName}</em>${formatted.journalName && formatted.journalDetails ? `, ${formatted.journalDetails}` : formatted.journalDetails}${formatted.linkInfo}</p>
+                    </div>
+                    <div class="pub-badges">
+                        ${getJournalBadge(formatted.journalName)}
                     </div>
                 `;
                 
