@@ -175,6 +175,30 @@ class BibTeXParser {
                     const lastAuthor = convertedAuthors.pop();
                     authors = `${convertedAuthors.join(', ')}, and ${lastAuthor}`;
                 }
+            } else if (rawAuthors.includes(' and ') && !rawAuthors.includes(',')) {
+                // {Author1 and Author2 and Author3}形式の場合: "Hideyoshi Miura and Tomotaka Kimura and Hirohisa Aman and Kouji Hirata"
+                const authorNames = rawAuthors.split(/\s+and\s+/);
+                const convertedAuthors = authorNames.map(name => {
+                    const trimmed = name.trim();
+                    const nameParts = trimmed.split(' ');
+                    if (nameParts.length >= 2) {
+                        const firstName = nameParts[0];
+                        const lastName = nameParts[nameParts.length - 1];
+                        const firstInitial = firstName.charAt(0).toUpperCase();
+                        return `${firstInitial}. ${lastName}`;
+                    }
+                    return trimmed; // フォールバック
+                });
+                
+                // 英語の文法に従って結合（最後の前に"and"を追加）
+                if (convertedAuthors.length === 1) {
+                    authors = convertedAuthors[0];
+                } else if (convertedAuthors.length === 2) {
+                    authors = `${convertedAuthors[0]} and ${convertedAuthors[1]}`;
+                } else {
+                    const lastAuthor = convertedAuthors.pop();
+                    authors = `${convertedAuthors.join(', ')}, and ${lastAuthor}`;
+                }
             } else {
                 // 通常の英語表記の場合
                 authors = rawAuthors
@@ -210,7 +234,12 @@ class BibTeXParser {
         // DOIまたはURLリンクを追加
         let linkInfo = '';
         if (doi) {
-            const doiUrl = doi.startsWith('http') ? doi : `https://doi.org/${doi}`;
+            // DOIの正規化処理
+            let cleanDoi = doi.trim();
+            // 余分な中括弧や文字を削除
+            cleanDoi = cleanDoi.replace(/^[{}]+|[{}]+$/g, '');
+            
+            const doiUrl = cleanDoi.startsWith('http') ? cleanDoi : `https://doi.org/${cleanDoi}`;
             linkInfo = ` <a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="doi-link">DOI</a>`;
         } else if (url) {
             linkInfo = ` <a href="${url}" target="_blank" rel="noopener noreferrer" class="url-link">URL</a>`;
