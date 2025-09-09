@@ -129,7 +129,9 @@ class BibTeXParser {
     formatPublication(pub, index) {
         const rawAuthors = this.cleanValue(pub.fields.author || '');
         const title = this.cleanValue(pub.fields.title || '');
-        const journal = this.cleanValue(pub.fields.journal || pub.fields.booktitle || '');
+        const journal = this.cleanValue(pub.fields.journal || '');
+        const booktitle = this.cleanValue(pub.fields.booktitle || '');
+        const conferenceInfo = journal || booktitle;
         const year = this.cleanValue(pub.fields.year || '');
         const volume = this.cleanValue(pub.fields.volume || '');
         const number = this.cleanValue(pub.fields.number || '');
@@ -224,12 +226,26 @@ class BibTeXParser {
             }
         }
         
-        let journalInfo = journal;
-        if (volume) journalInfo += `, vol. ${volume}`;
-        if (number) journalInfo += journalInfo ? `, no. ${number}` : `no. ${number}`;
-        if (pages) journalInfo += journalInfo ? `, pp. ${pages}` : `pp. ${pages}`;
-        if (year) journalInfo += journalInfo ? `, ${year}` : `${year}`;
-        if (note) journalInfo += journalInfo ? `, ${note}` : `${note}`;
+        // ジャーナル名とその他の情報を分離
+        let journalName = conferenceInfo;
+        let journalDetails = '';
+        
+        // booktitleに年が含まれているかチェック
+        const hasYearInTitle = conferenceInfo && /\d{4}/.test(conferenceInfo);
+        
+        // volume, number, pages, noteを順番に追加
+        if (volume) journalDetails += journalDetails ? `, vol. ${volume}` : `vol. ${volume}`;
+        if (number) journalDetails += journalDetails ? `, no. ${number}` : `no. ${number}`;
+        if (pages) journalDetails += journalDetails ? `, pp. ${pages}` : `pp. ${pages}`;
+        if (note) journalDetails += journalDetails ? `, ${note}` : `${note}`;
+        
+        // 年の追加（すべてのケースでカンマ+スペース）
+        if (year && !hasYearInTitle) {
+            journalDetails = journalDetails ? `${journalDetails}, ${year}.` : `${year}.`;
+        } else if (year && hasYearInTitle) {
+            // 年がタイトルに含まれている場合でも、最後にピリオドを追加
+            journalDetails = journalDetails ? `${journalDetails}.` : `.`;
+        }
         
         // DOIまたはURLリンクを追加
         let linkInfo = '';
@@ -249,7 +265,10 @@ class BibTeXParser {
             number: index + 1,
             authors: authors,
             title: title,
-            journal: journalInfo + linkInfo,
+            journalName: journalName,
+            journalDetails: journalDetails,
+            linkInfo: linkInfo,
+            journal: journalName + journalDetails + linkInfo,
             year: year
         };
     }
@@ -350,7 +369,7 @@ function updatePublicationsFromBibTeX(publications) {
                     <div class="pub-details">
                         <p class="pub-authors">${formatted.authors}</p>
                         <p class="pub-title">${formatted.title}</p>
-                        <p class="pub-journal">${formatted.journal}</p>
+                        <p class="pub-journal"><em>${formatted.journalName}</em>${formatted.journalName && formatted.journalDetails ? `, ${formatted.journalDetails}` : formatted.journalDetails}${formatted.linkInfo}</p>
                     </div>
                 `;
                 
