@@ -32,12 +32,20 @@
             <li><a href="#biography" class="side-menu-item active">Biography</a></li>
             <li><a href="#information" class="side-menu-item">Information</a></li>
             <li><a href="#research-topic" class="side-menu-item">Research Topic</a></li>
-            <li><a href="#education" class="side-menu-item">Education</a></li>
             <li><a href="#career" class="side-menu-item">Career</a></li>
-            <li><a href="#publications" class="side-menu-item">Publications</a></li>
+            <li class="menu-item-with-submenu">
+                <a href="#publications" class="side-menu-item">Publications</a>
+                <ul class="submenu">
+                    <li><a href="#journal-papers" class="submenu-item">論文誌</a></li>
+                    <li><a href="#international-reviewed" class="submenu-item">国際会議（査読有）</a></li>
+                    <li><a href="#international-other" class="submenu-item">国際会議（その他）</a></li>
+                    <li><a href="#domestic" class="submenu-item">国内発表</a></li>
+                    <li><a href="#grant" class="submenu-item">研究助成等</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
-
+    
     <main>
         <div class="main-content">
             <div class="info-section" id="biography">
@@ -52,82 +60,91 @@
                             <p class="department">医用情報ネットワーク学研究室</p>
                         </div>
                     </div>
+                    
                 </div>
                 
                 <div class="info-content">
                     <div class="info-block" id="information">
                         <h3>Information:</h3>
-                        <ul>
-                            <li><strong>Name:</strong> 三浦秀芳 (Hideyoshi Miura)</li>
-                            <li><strong>Degree:</strong> 博士(工学)</li>
-                            <li><strong>Affiliation:</strong> 岡山大学 工学部 情報・電気・数理データサイエンス系</li>
-                            <li><strong>Laboratory:</strong> 医用情報ネットワーク学研究室</li>
-                            <li><strong>Position:</strong> 助教</li>
-                            <li><strong>E-mail:</strong> hmiura[at]okayama.ac.jp</li>
-                        </ul>
+                        <div class="info-item">
+                            <h4>氏名 (Name)</h4>
+                            <p class="info-content">三浦秀芳（H. Miura）</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h4>学位 (Degree)</h4>
+                            <p class="info-content">博士（工学） / Ph.D. in Engineering</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h4>所属 (Affiliation)</h4>
+                            <p class="info-content">岡山大学 学術研究院 ヘルスシステム統合科学学域</p>
+                            <p class="info-content">医用情報ネットワーク学研究室</p>
+                            <p class="info-content-en">Okayama University, Graduate School of Interdisciplinary Science and Engineering in Health Systems</p>
+                            <p class="info-content-en">Medical Information Network Laboratory</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h4>職位 (Position)</h4>
+                            <p class="info-content">助教 / Assistant Professor</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h4>E-mail</h4>
+                            <p class="info-content">h-miura[at]okayama-u.ac.jp</p>
+                        </div>
                     </div>
                     
                     <div class="info-block" id="research-topic">
                         <h3>Research Topic:</h3>
                         <ul>
-                            <li><a href="research.html#communication-protocol">通信プロトコル</a></li>
-                            <li><a href="research.html#edge-computing">エッジコンピューティング</a></li>
-                            <li><a href="research.html#fault-tolerant">耐障害性ネットワーク</a></li>
-                            <li><a href="research.html#cloud-computing">クラウドコンピューティング</a></li>
-                            <li><a href="research.html#uav-network">UAVネットワーク</a></li>
-                            <li><a href="research.html#sdn">ソフトウェア定義ネットワーク</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="info-block" id="education">
-                        <h3>Education:</h3>
-                        <ul>
-                            <li><strong>2020.3</strong> 関西大学 システム理工学部 電気電子情報工学科 卒業</li>
-                            <li><strong>2022.3</strong> 関西大学大学院 理工学研究科 博士課程前期課程 システム理工学専攻 修了</li>
-                            <li><strong>2025.3</strong> 関西大学大学院 理工学研究科 博士課程後期課程 総合理工学専攻 修了</li>
+                            <li>情報ネットワーク</li>
                         </ul>
                     </div>
                     
                     <div class="info-block" id="career">
                         <h3>Career:</h3>
                         <ul>
-                            <li><strong>2024.6</strong> 台湾中原大学（関西大学若手研究者海外研究活動）</li>
-                            <li><strong>2025.4~</strong> 岡山大学 工学部 情報・電気・数理データサイエンス系 医用情報ネットワーク学研究室 助教</li>
+                            <li><strong>2020.3</strong>	関西大学 システム理工学部 電気電子情報工学科（卒業）</li>
+                            <li><strong>2022.3</strong>	関西大学大学院 理工学研究科 博士課程前期課程 システム理工学専攻（修了）</li>
+                            <li><strong>2024.6</strong>	台湾中原大学（関西大学若手研究者海外研究活動）</li>
+                            <li><strong>2025.3</strong>	関西大学大学院 理工学研究科 博士課程後期課程 総合理工学専攻 (修了)</li>
+                            <li><strong>2025.4~</strong>    岡山大学 工学部 情報・電気・数理データサイエンス系 医用情報ネットワーク学研究室 助教</li>
                         </ul>
                     </div>
                     
                     <div class="info-block" id="publications">
                         <h3>Publications:</h3>
                         
-                        <div class="publication-subsection">
+                        <div class="publication-subsection" id="journal-papers">
                             <h4>論文誌</h4>
                             <div class="publications-list journal-papers">
                                 <!-- 論文誌の論文がここに表示されます -->
                             </div>
                         </div>
                         
-                        <div class="publication-subsection">
+                        <div class="publication-subsection" id="international-reviewed">
                             <h4>国際会議（査読有）</h4>
                             <div class="publications-list international-reviewed">
                                 <!-- 国際会議（査読有）の論文がここに表示されます -->
                             </div>
                         </div>
                         
-                        <div class="publication-subsection">
+                        <div class="publication-subsection" id="international-other">
                             <h4>国際会議（その他）</h4>
                             <div class="publications-list international-other">
                                 <!-- 国際会議（その他）の論文がここに表示されます -->
                             </div>
                         </div>
                         
-                        <div class="publication-subsection">
+                        <div class="publication-subsection" id="domestic">
                             <h4>国内発表</h4>
                             <div class="publications-list domestic">
                                 <!-- 国内発表の論文がここに表示されます -->
                             </div>
                         </div>
                         
-                        <div class="publication-subsection">
+                        <div class="publication-subsection" id="grant">
                             <h4>研究助成等</h4>
                             <div class="publications-list grant">
                                 <!-- 研究助成等がここに表示されます -->

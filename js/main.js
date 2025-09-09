@@ -148,14 +148,64 @@ class BibTeXParser {
             rawAuthors.includes('鎌村') || rawAuthors.includes('常松')) {
             // 日本語の場合は「and」を「，」に置換
             authors = rawAuthors.replace(/\s+and\s+/g, '，');
+            // 先頭と末尾の「，」を削除
+            authors = authors.replace(/^，+|，+$/g, '').trim();
+        } else {
+            // 英語の場合は「H. Miura」形式に変換
+            // BibTeX形式（Last, First）を処理
+            if (rawAuthors.includes(',')) {
+                // BibTeX形式の場合: "Misugi, Hyoryu and Miura, Hideyoshi and Hirata, Kouji and Tachibana, Takushi"
+                const authorPairs = rawAuthors.split(/\s+and\s+/);
+                const convertedAuthors = authorPairs.map(pair => {
+                    const trimmed = pair.trim();
+                    if (trimmed.includes(',')) {
+                        const [lastName, firstName] = trimmed.split(',').map(s => s.trim());
+                        const firstInitial = firstName.charAt(0).toUpperCase();
+                        return `${firstInitial}. ${lastName}`;
+                    }
+                    return trimmed; // フォールバック
+                });
+                
+                // 英語の文法に従って結合（最後の前に"and"を追加）
+                if (convertedAuthors.length === 1) {
+                    authors = convertedAuthors[0];
+                } else if (convertedAuthors.length === 2) {
+                    authors = `${convertedAuthors[0]} and ${convertedAuthors[1]}`;
+                } else {
+                    const lastAuthor = convertedAuthors.pop();
+                    authors = `${convertedAuthors.join(', ')}, and ${lastAuthor}`;
+                }
+            } else {
+                // 通常の英語表記の場合
+                authors = rawAuthors
+                    .replace(/Hideyoshi Miura/g, 'H. Miura')
+                    .replace(/Tomotaka Kimura/g, 'T. Kimura')
+                    .replace(/Kouji Hirata/g, 'K. Hirata')
+                    .replace(/Hyoryu Misugi/g, 'H. Misugi')
+                    .replace(/Hiroshi Aman/g, 'H. Aman')
+                    .replace(/Takushi Tachibana/g, 'T. Tachibana')
+                    .replace(/Mikoto Tsunematsu/g, 'M. Tsunematsu')
+                    .replace(/Katsunori Uno/g, 'K. Uno')
+                    .replace(/Shoya Abukawa/g, 'S. Abukawa')
+                    .replace(/Yuto Hazama/g, 'Y. Hazama')
+                    .replace(/Ryo Kaneko/g, 'R. Kaneko')
+                    .replace(/Kentaro Kaju/g, 'K. Kaju')
+                    .replace(/Shogo Ishikawa/g, 'S. Ishikawa')
+                    .replace(/Yuki Ito/g, 'Y. Ito')
+                    .replace(/Takumi Sakamoto/g, 'T. Sakamoto')
+                    .replace(/Takumi Tabuchi/g, 'T. Tabuchi')
+                    .replace(/Seihei Kamamura/g, 'S. Kamamura')
+                    .replace(/Mikoto Tsunematsu/g, 'M. Tsunematsu')
+                    .replace(/Rinichiro Nishimoto/g, 'R. Nishimoto');
+            }
         }
         
         let journalInfo = journal;
         if (volume) journalInfo += `, vol. ${volume}`;
-        if (number) journalInfo += `, no. ${number}`;
-        if (pages) journalInfo += `, pp. ${pages}`;
-        if (year) journalInfo += `, ${year}`;
-        if (note) journalInfo += `, ${note}`;
+        if (number) journalInfo += journalInfo ? `, no. ${number}` : `no. ${number}`;
+        if (pages) journalInfo += journalInfo ? `, pp. ${pages}` : `pp. ${pages}`;
+        if (year) journalInfo += journalInfo ? `, ${year}` : `${year}`;
+        if (note) journalInfo += journalInfo ? `, ${note}` : `${note}`;
         
         // DOIまたはURLリンクを追加
         let linkInfo = '';
@@ -380,6 +430,34 @@ function initSideMenu() {
         });
     });
     
+    // サブメニューのクリック機能
+    const submenuItems = document.querySelectorAll('.submenu-item');
+    submenuItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            console.log('Submenu clicked, target ID:', targetId);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                console.log('Target element found:', targetElement);
+                // サブメニュー項目のオフセット設定
+                let offset = 80; // サブ見出し用のオフセット
+                
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                console.log('Scrolling to position:', offsetPosition);
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            } else {
+                console.error('Target element not found for ID:', targetId);
+            }
+        });
+    });
+    
     // スクロール時の動作
     window.addEventListener('scroll', function() {
         updateActiveSideMenu();
@@ -402,7 +480,7 @@ function initSideMenu() {
 }
 
 function updateActiveSideMenu() {
-    const sections = ['biography', 'information', 'research-topic', 'education', 'career', 'publications'];
+    const sections = ['biography', 'information', 'research-topic', 'career', 'publications'];
     const sideMenuItems = document.querySelectorAll('.side-menu-item');
     
     let currentSection = '';
